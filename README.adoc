@@ -31,7 +31,8 @@ bundle install --without production
 # bundle --path vendor/bundle --without production
 # bundle --path /tmp/<unique id> --without production  # w laboratoriach (quota)
 rails server --help
-rails server -p 3000 -b 0.0.0.0
+# rails server -p 3000 -b 0.0.0.0
+rails server
 ----
 
 Generate Gist model/views/controlers:
