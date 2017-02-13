@@ -1,0 +1,252 @@
+# My Gists
+
+This README would normally document whatever steps are necessary to get the
+application up and running.
+
+Things you may want to cover:
+
+* Ruby version: *2.3.1*
+
+* System dependencies: none
+
+* Configuration
+
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Uses https://github.com/jneen/rouge[rouge gem] –
+  a pure-ruby code highlighter that is compatible with _pygments_.
+
+* https://github.com/rails4/my_gists5.beta2#heroku[Deployment instructions for Heroku]:
+  _https://gists5.herokuapp.com_
+
+
+## From the beginning
+
+[source,bash]
+----
+rails new my_gists
+cd my_gists
+# bundle install
+# bundle install --local
+bundle install --without production
+# bundle install --without production --local
+# bundle --path vendor/bundle --without production
+# bundle --path /var/sandbox/<id> --without production   # na Sigmie i w laboratoriach
+rails server --help
+rails server -p 3000 -b 0.0.0.0
+----
+
+Generate Gist model/views/controlers:
+
+[source,bash]
+----
+rails generate --help
+rails generate scaffold gist src:text lang:string desc:string
+# rails db:migrate RAILS_ENV=development
+rails db:migrate
+# open http://localhost:3000/gists
+----
+
+You can have the root of your site routed with "root"
+
+.config/routes.rb
+[source,ruby]
+----
+root 'gists#index'
+# http://localhost:3000
+----
+
+Check available routes:
+
+[source,bash]
+----
+rails routes
+----
+
+
+## Heroku
+
+* https://www.railstutorial.org/book/beginning#sec-deploying[Deploying]
+
+IMPORTANT: W pliku _Gemfile_ należy przenieść
+gem _sqlite3_ do grupy _:development, :test_,
+a gem _pg_ należy wpisać do grupy _:production_.
+
+._Gemfile_
+[source,ruby]
+----
+group :development, :test do
+  gem 'byebug', platform: :mri
+  gem 'sqlite3'
+end
+
+group :production do
+  gem 'pg', '0.18.4'
+end
+----
+
+Teraz czas na instalację https://toolbelt.heroku.com[Heroku Toolbelt].
+Po instalacji wykonujemy:
+
+[source,bash]
+----
+bundle install --without production
+git commit -am "update for Heroku"
+
+# wykonujemy tylko raz
+heroku login
+heroku keys:add
+
+heroku create
+git push heroku master
+
+heroku run rails db:migrate
+# heroku open
+
+# zastąp nazwę gist5 swoją nazwą aplikacji
+heroku apps:rename gists5
+# heroku open
+----
+
+Warto też dodać wersję Ruby do pliku _Gemfile_:
+
+[source,ruby]
+----
+ruby '2.3.1'
+----
+
+oraz dodać plik _Procfile_ w którym wymienimy domyślny (dla wersji Rails 4)
+serwer webowy https://devcenter.heroku.com/articles/ruby-default-web-server[Webrick]
+na szybką pumę 😓
+
+._Procfile_
+[source,ruby]
+----
+web: bundle exec puma -C config/puma.rb
+----
+
+Zobacz też
+https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server[Deploying Rails Applications with the Puma Web Server].
+
+
+## Prettyprinting gists
+
+._Gemfile_
+[source,ruby]
+----
+gem 'rouge', '~> 2.0.0'
+----
+
+W pliku _app/views/gists/index.html.erb_ wymieniamy element _table_ na element _pre_ i kilka akapitów _p_:
+[source,html]
+----
+<% @gists.each do |gist| %>
+  <pre><%= gist.src %></pre>
+  <p><%= gist.lang %></p>
+  <p><%= gist.desc %></p>
+  <p>
+    <%= link_to 'Show', gist %> |
+    <%= link_to 'Edit', edit_gist_path(gist) %> |
+    <%= link_to 'Destroy', gist, method: :delete, data: { confirm: 'Are you sure?' } %>
+  </p>
+<% end %>
+----
+
+W pliku _app/views/gists/show.html.erb_ podmieniamy element z `@gist.src` na:
+[source,html]
+----
+<pre class="highlight"><%= raw Rouge.highlight @gist.src, @gist.lang, 'html' %></pre>
+----
+
+Tworzymy nowy plik _app/assets/stylesheets/rouge.css.erb_ o zawartości:
+[source,erb]
+----
+<%= Rouge::Themes::Github.render(scope: '.highlight')%>
+----
+
+
+## Custom Layout with Bootstrap
+
+* http://getbootstrap.com[Bootstrap] –
+  the most popular HTML, CSS, and JS framework for developing responsive,
+  mobile first projects on the web
+* https://www.railstutorial.org/book/filling_in_the_layout#sec-custom_css[Bootstrap and custom CSS]
+
+._Gemfile_
+[source,ruby]
+----
+gem 'bootstrap-sass'
+
+group :development do
+  # gem 'quiet_assets' # see https://github.com/evrone/quiet_assets
+  # gem 'rubocop', require: false # for Atom editor
+  # gem 'scss_lint', require: false # for Atom editor
+end
+----
+
+*Użyć generatora z gemu
+https://github.com/doabit/bootstrap-sass-extras[bootstrap-sass-extras]
+czy nie?*
+
+._Gemfile_
+[source,ruby]
+----
+gem 'bootstrap-sass-extras' # bootstrap:install dodaje config/locales/en.bootstrap.yml
+----
+
+[source,bash]
+----
+bundle update
+rails generate # co to jest layout aplikacji?
+
+rails generate bootstrap:install 
+rails generate bootstrap:themed gists # <- liczba mnoga!
+----
+
+
+### Bootstrap krok po kroku…
+
+Dodajemy pionowy odstęp u góry każdej strony _app/assets/stylesheets/custom.css.scss_:
+[source,scss]
+----
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+
+body {
+  padding-top: 60px;
+}
+----
+
+Zmieniamy layout aplikacji _app/views/layouts/application.html.erb_:
+[source,html]
+----
+<body>
+  <%= render 'layouts/header' %>
+  <div class="container">
+    <%= yield %>
+  </div>
+</body>
+----
+
+Dodajemy widok częściowy _app/views/layouts/_header.html.erb_:
+[source,html]
+----
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <nav>
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "Home",  '/' %></li>
+        <li><%= link_to "About", '/about' %></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+----
+
+Pozostaje **przywrócić** kolorowanie (prettyprinting) fragmentów kodu (gists).
