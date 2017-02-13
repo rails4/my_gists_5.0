@@ -43,6 +43,8 @@ rails generate --help
 rails generate scaffold gist src:text lang:string desc:string
 # rails db:migrate RAILS_ENV=development
 rails db:migrate
+# check available routes
+# rails routes
 # open http://localhost:3000/gists
 ----
 
@@ -55,17 +57,9 @@ root 'gists#index'
 # http://localhost:3000
 ----
 
-Check available routes:
+## Deploying to production: Heroku
 
-[source,bash]
-----
-rails routes
-----
-
-
-## Heroku
-
-* https://www.railstutorial.org/book/beginning#sec-deploying[Deploying]
+. https://www.railstutorial.org/book/beginning#sec-deploying[Deploying]
 
 IMPORTANT: W pliku _Gemfile_ należy przenieść
 gem _sqlite3_ do grupy _:development, :test_,
@@ -80,7 +74,8 @@ group :development, :test do
 end
 
 group :production do
-  gem 'pg', '0.18.4'
+  # gem 'pg', '0.18.4'
+  gem 'pg', '0.19.0'
 end
 ----
 
