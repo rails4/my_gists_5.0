@@ -1,10 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Src:</strong>
-  <%= @gist.src %>
-</p>
-
+<pre class="highlight"><%= raw Rouge.highlight @gist.src, @gist.lang, 'html' %></pre>
 <p>
   <strong>Lang:</strong>
   <%= @gist.lang %>

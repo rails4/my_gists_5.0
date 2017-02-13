@@ -165,7 +165,7 @@ Zobacz też
 https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server[Deploying Rails Applications with the Puma Web Server].
 
 
-## Prettyprinting gists
+## Prettyprinting
 
 ._Gemfile_
 [source,ruby]
@@ -173,13 +173,15 @@ https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma
 gem 'rouge', '~> 2.0.0'
 ----
 
-W pliku _app/views/gists/index.html.erb_ wymieniamy element _table_ na element _pre_ i kilka akapitów _p_:
+W pliku _app/views/gists/index.html.erb_ wymieniamy element _table_
+na element _pre_ i kilka akapitów _p_.
+
 [source,html]
 ----
 <% @gists.each do |gist| %>
   <pre><%= gist.src %></pre>
-  <p><%= gist.lang %></p>
-  <p><%= gist.desc %></p>
+  <p>Lang: <%= gist.lang %></p>
+  <p>Desc: <%= gist.desc %></p>
   <p>
     <%= link_to 'Show', gist %> |
     <%= link_to 'Edit', edit_gist_path(gist) %> |
@@ -203,10 +205,14 @@ Tworzymy nowy plik _app/assets/stylesheets/rouge.css.erb_ o zawartości:
 
 ## Custom Layout with Bootstrap
 
-* http://getbootstrap.com[Bootstrap] –
+. http://getbootstrap.com[Bootstrap] –
   the most popular HTML, CSS, and JS framework for developing responsive,
   mobile first projects on the web
-* https://www.railstutorial.org/book/filling_in_the_layout#sec-custom_css[Bootstrap and custom CSS]
+. https://www.railstutorial.org/book/filling_in_the_layout#sec-custom_css[Bootstrap and custom CSS]
+. https://github.com/bootstrap-ruby/rails-bootstrap-forms[rails-bootstrap-forms] –
+  a Rails form builder that makes it super easy to create beautiful-looking
+  forms with Twitter Bootstrap 3+. Wraps the standard Rails form helpers
+  so it’s practically a drop-in replacement.
 
 ._Gemfile_
 [source,ruby]
@@ -221,8 +227,7 @@ end
 ----
 
 *Użyć generatora z gemu
-https://github.com/doabit/bootstrap-sass-extras[bootstrap-sass-extras]
-czy nie?*
+https://github.com/doabit/bootstrap-sass-extras[bootstrap-sass-extras] czy nie?*
 
 ._Gemfile_
 [source,ruby]
