@@ -203,7 +203,7 @@ Tworzymy nowy plik _app/assets/stylesheets/rouge.css.erb_ o zawartości:
 ----
 
 
-## TODO: Custom Layout with Bootstrap
+## Custom layout with Bootstrap
 
 . http://getbootstrap.com[Bootstrap] –
   the most popular HTML, CSS, and JS framework for developing responsive,
@@ -229,6 +229,8 @@ group :development do
 end
 ----
 
+Po tych poprawkach w pliku _Gemfile_ wykonujemy:
+
 [source,bash]
 ----
 bundle
@@ -239,7 +241,7 @@ rails generate bootstrap:themed gists # <- liczba mnoga!
 ----
 
 
-### Bootstrap krok po kroku…
+### Bootstrap krok po kroku
 
 Dodajemy pionowy odstęp u góry każdej strony _app/assets/stylesheets/custom.css.scss_:
 [source,scss]
