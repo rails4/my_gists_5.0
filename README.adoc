@@ -57,9 +57,9 @@ root 'gists#index'
 # http://localhost:3000
 ----
 
-## Deploying to production: Heroku
+## Deploying to production – Heroku
 
-. https://www.railstutorial.org/book/beginning#sec-deploying[Deploying]
+Zobacz też https://www.railstutorial.org/book/beginning#sec-deploying[Deploying].
 
 IMPORTANT: W pliku _Gemfile_ należy przenieść
 gem _sqlite3_ do grupy _:development, :test_,
