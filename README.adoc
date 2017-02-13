@@ -74,7 +74,6 @@ group :development, :test do
 end
 
 group :production do
-  # gem 'pg', '0.18.4'
   gem 'pg', '0.19.0'
 end
 ----
@@ -92,8 +91,8 @@ heroku login
 heroku keys:add
 ----
 
-Dodajemy nową aplikację na https://dashboard.heroku.com/apps[Dashboard] lub
-na konsoli.
+Dodajemy nową aplikację na https://dashboard.heroku.com/apps[Dashboard] albo
+dodajemy ją na konsoli.
 
 [source,bash]
 ----
@@ -144,14 +143,15 @@ heroku apps:rename gists5
 # heroku open https://gists5.herokuapp.com/
 ----
 
-Ostrzeżenia powyżej sugerują, że warto też dodać wersję Ruby do pliku _Gemfile_:
+Ostrzeżenia powyżej sugerują, że warto zmienić kilka rzeczy, np.
+dodać wersję Ruby do pliku _Gemfile_:
 
 [source,ruby]
 ----
 ruby '2.4.0'
 ----
 
-oraz dodać plik _Procfile_ w którym wymienimy domyślny (dla wersji Rails 4)
+dodać plik _Procfile_ w którym wymienimy domyślny (dla wersji Rails 4)
 serwer webowy https://devcenter.heroku.com/articles/ruby-default-web-server[Webrick]
 na szybką pumę 😓
 
@@ -165,7 +165,7 @@ Zobacz też
 https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server[Deploying Rails Applications with the Puma Web Server].
 
 
-## Prettyprinting
+## Source code prettyprinting
 
 ._Gemfile_
 [source,ruby]
@@ -203,7 +203,7 @@ Tworzymy nowy plik _app/assets/stylesheets/rouge.css.erb_ o zawartości:
 ----
 
 
-## Custom Layout with Bootstrap
+## TODO: Custom Layout with Bootstrap
 
 . http://getbootstrap.com[Bootstrap] –
   the most popular HTML, CSS, and JS framework for developing responsive,
