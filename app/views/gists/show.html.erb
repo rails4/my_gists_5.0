@@ -1,15 +1,27 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Gist -%>
+<div class="page-header">
+  <h1><%=t '.title', default: model_class.model_name.human.titleize %></h1>
+</div>
 
-<pre class="highlight"><%= raw Rouge.highlight @gist.src, @gist.lang, 'html' %></pre>
-<p>
-  <strong>Lang:</strong>
-  <%= @gist.lang %>
-</p>
+<div class="fieldset">
+  <dl>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:src) %></dt>
+      <dd><pre class="highlight"><%= raw Rouge.highlight @gist.src, @gist.lang, 'html' %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:lang) %></dt>
+      <dd><pre class="prettyprint"><%= @gist.lang %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:desc) %></dt>
+      <dd><pre class="prettyprint"><%= @gist.desc %></pre></dd>
+  </dl>
+</div>
 
-<p>
-  <strong>Desc:</strong>
-  <%= @gist.desc %>
-</p>
-
-<%= link_to 'Edit', edit_gist_path(@gist) %> |
-<%= link_to 'Back', gists_path %>
+<div class="form-group">
+  <%= link_to t('.back', default: t("helpers.links.back")),
+              gists_path, class: 'btn btn-default'  %>
+  <%= link_to t('.edit', default: t("helpers.links.edit")),
+              edit_gist_path(@gist), class: 'btn btn-default' %>
+  <%= link_to t('.destroy', default: t("helpers.links.destroy")),
+              gist_path(@gist),
+              method: 'delete',
+              data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) },
+              class: 'btn btn-danger' %>
+</div>

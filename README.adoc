@@ -217,27 +217,21 @@ Tworzymy nowy plik _app/assets/stylesheets/rouge.css.erb_ o zawartości:
 ._Gemfile_
 [source,ruby]
 ----
-gem 'bootstrap-sass'
+# Make all the necessary Bootstrap files available to the current application
+gem 'bootstrap-sass', '3.3.7'
+gem 'bootstrap-sass-extras', '0.0.7'
 
+# Optionally install
 group :development do
   # gem 'quiet_assets' # see https://github.com/evrone/quiet_assets
-  # gem 'rubocop', require: false # for Atom editor
-  # gem 'scss_lint', require: false # for Atom editor
+  gem 'rubocop', require: false # for Atom editor
+  gem 'scss_lint', require: false # for Atom editor
 end
-----
-
-*Użyć generatora z gemu
-https://github.com/doabit/bootstrap-sass-extras[bootstrap-sass-extras] czy nie?*
-
-._Gemfile_
-[source,ruby]
-----
-gem 'bootstrap-sass-extras' # bootstrap:install dodaje config/locales/en.bootstrap.yml
 ----
 
 [source,bash]
 ----
-bundle update
+bundle
 rails generate # co to jest layout aplikacji?
 
 rails generate bootstrap:install
@@ -252,10 +246,9 @@ Dodajemy pionowy odstęp u góry każdej strony _app/assets/stylesheets/custom.c
 ----
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
-
-body {
-  padding-top: 60px;
-}
+// body {
+//   padding-top: 60px;
+// }
 ----
 
 Zmieniamy layout aplikacji _app/views/layouts/application.html.erb_:
@@ -284,4 +277,5 @@ Dodajemy widok częściowy _app/views/layouts/_header.html.erb_:
 </header>
 ----
 
-Pozostaje **przywrócić** kolorowanie (prettyprinting) fragmentów kodu (gists).
+Pozostaje **przywrócić** kolorowanie fragmentów kodu (gists),
+dodać podstronę _About_, poprawić _index.html.erb_, itd.

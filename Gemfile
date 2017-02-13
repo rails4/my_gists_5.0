@@ -11,6 +11,11 @@ end
 gem 'rails', '~> 5.0.1'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
+
+# Make all the necessary Bootstrap files available to the current application
+gem 'bootstrap-sass', '3.3.7'
+# Provides four generators
+gem 'bootstrap-sass-extras', '0.0.7'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -47,6 +52,9 @@ group :development do
   # in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  # Optionally install
+  gem 'rubocop', require: false # for Atom editor
+  gem 'scss_lint', require: false # for Atom editor
 end
 
 group :production do
