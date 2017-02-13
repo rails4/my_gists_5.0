@@ -229,13 +229,12 @@ group :development do
 end
 ----
 
-Po tych poprawkach w pliku _Gemfile_ wykonujemy:
+Po tych poprawkach w pliku _Gemfile_ wykonujemy na konsoli te polecenia:
 
-[source,bash]
+[source,sh]
 ----
 bundle
 rails generate # co to jest layout aplikacji?
-
 rails generate bootstrap:install
 rails generate bootstrap:themed gists # <- liczba mnoga!
 ----
