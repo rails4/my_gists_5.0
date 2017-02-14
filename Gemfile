@@ -53,8 +53,9 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   # Optionally install
-  gem 'rubocop', require: false # for Atom editor
+  gem 'rubocop', require: false   # for Atom editor
   gem 'scss_lint', require: false # for Atom editor
+  gem 'awesome_print', '~> 1.7.0' # ap method pretty prints objects with style
 end
 
 group :production do

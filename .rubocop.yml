@@ -11,13 +11,13 @@ AllCops:
 Rails:
   Enabled: true
 
+Style/Documentation:
+  Enabled: false
+
 # Bundler/OrderedGems:
 #   Enabled: false
 #
 # Metrics/LineLength:
-#   Enabled: false
-#
-# Style/Documentation:
 #   Enabled: false
 #
 # Style/StringLiterals:
