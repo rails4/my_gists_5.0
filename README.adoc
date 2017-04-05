@@ -30,12 +30,31 @@ bin/rails db:migrate
 
 ### 6.2 Associating Models
 
-. Each comment belongs to one article.
-. One article can have many comments.
+* Each comment belongs to one gist.
+* One gist can have many comments.
 
+```ruby
+class Gist < ApplicationRecord
+  has_many :comments
+  validates :src, presence: true, length: { minimum: 8, maximum: 256 }
+end
+```
 
+### Adding a Route for Comments
 
+Update _config/routes.rb_.
 
+```ruby
+resources :gist do
+  resources :comments
+end
+```
+
+Check routing.
+
+```sh
+rails routes
+```
 
 
 ## From the beginning
