@@ -20,11 +20,18 @@ git checkout add_comments
 
 The second model will handle comments on gists.
 
+### 6.1 Generating a Model
+
 ```sh
 bin/rails generate model Comment commenter:string body:text gist:references
 # check generated files models/comments.rb and migration
 bin/rails db:migrate
 ```
+
+### 6.2 Associating Models
+
+. Each comment belongs to one article.
+. One article can have many comments.
 
 
 
