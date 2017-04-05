@@ -25,3 +25,33 @@
               data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) },
               class: 'btn btn-danger' %>
 </div>
+
+<h2>Comments</h2>
+
+<% @gist.comments.each do |comment| %>
+  <p>
+    <strong>Commenter:</strong>
+    <%= comment.commenter %>
+  </p>
+
+  <p>
+    <strong>Comment:</strong>
+    <%= comment.body %>
+  </p>
+<% end %>
+
+<h2>Add a comment</h2>
+
+<%= form_for([@gist, @gist.comments.build]) do |f| %>
+  <p>
+    <%= f.label :commenter %><br>
+    <%= f.text_field :commenter %>
+  </p>
+  <p>
+    <%= f.label :body %><br>
+    <%= f.text_area :body %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

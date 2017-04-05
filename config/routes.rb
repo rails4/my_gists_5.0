@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'gists#index'
 
-  resources :articles do
+  resources :gists do
     resources :comments
   end
 
