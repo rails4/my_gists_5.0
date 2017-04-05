@@ -16,6 +16,21 @@ Kod jest na gałęzi _add_comments_
 git checkout add_comments
 ```
 
+## Adding a second model
+
+The second model will handle comments on gists.
+
+```sh
+bin/rails generate model Comment commenter:string body:text gist:references
+# check generated files models/comments.rb and migration
+bin/rails db:migrate
+```
+
+
+
+
+
+
 ## From the beginning
 
 [source,bash]
