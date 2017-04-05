@@ -14,6 +14,7 @@ Kod jest na gałęzi _add_comments_
 +
 ```sh
 git checkout add_comments
+# git push -u origin add_comments # pushing local branch to GitHub
 ```
 
 ## From the beginning
