@@ -1,24 +1,18 @@
 # My Gists (responders branch)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The *_responders_* branch contains an example usage – adding remarks to gists.
 
-. Ruby version: *2.4.1*, Rails – *5.0.2*
-. Uses https://github.com/jneen/rouge[rouge gem] –
-  a pure-ruby code highlighter that is compatible with _pygments_.
+Kod jest na gałęzi _responders_:
 
-Tutorials:
-
-. https://www.railstutorial.org/book/beginning#sec-deploying[Deployment instructions for Heroku]
-  by M. Hartl
-. http://edgeguides.rubyonrails.org/getting_started.html#adding-a-second-model[Adding a Second Model]
-+
-Kod jest na gałęzi _responders_
-+
 ```sh
 git checkout responders
 git push --set-upstream origin responders # pushing local branch to GitHub
 ```
+
+Tutorial:
+
+. http://edgeguides.rubyonrails.org/getting_started.html#adding-a-second-model[Adding a Second Model]
+
 
 Cloning repo on a new computer:
 ```sh
@@ -27,7 +21,10 @@ cd my_gists_5.0
 git checkout --track origin/responders
 ```
 
-Responders (_responders_ branch contains an example – adding remarks to gists):
+
+## Responders
+
+Docs:
 
 * https://github.com/plataformatec/responders[gem responders]
 * also includes a responders controller generator, so your scaffold
@@ -39,11 +36,11 @@ to your _config/environments/development.rb_:
 config.app_generators.scaffold_controller :responders_controller
 ```
 
-## Responders
-
-TODO:
+Konfigurujemy generator tak jak to opisano powyżej,
+dopisujemy gem _reponders_ do _Gemfile_. Następnie wykonujemy
 
 ```sh
+bundle install
 rails generate responders:install
       create  lib/application_responder.rb
       insert  config/application.rb
@@ -51,6 +48,8 @@ rails generate responders:install
       insert  app/controllers/application_controller.rb
       create  config/locales/responders.en.yml
 ```
+
+### Scaffolding Remark controller
 
 Stubs out a scaffolded controller and its views. Different from rails
 scaffold_controller, it uses respond_with instead of respond_to blocks. Pass the
@@ -69,7 +68,9 @@ rails g responders_controller Remark note:text
       create    app/views/remarks/_form.html.erb
 ```
 
-_RemarkController_
+Wygenerowany _RemarkController_ – obsługuje tylko jeden format – HTML.
+I o to chodziło! Przy okazji kod kontrolera jest krótszy i bardziej zrozumiały.
+
 ```ruby
 class RemarksController < ApplicationController
   before_action :set_remark, only: [:show, :edit, :update, :destroy]
@@ -119,3 +120,7 @@ class RemarksController < ApplicationController
     end
 end
 ```
+
+### Next steps
+
+Teraz piszemy kod tak jak to robiliśmy dodając komentarze do gist-ów.
