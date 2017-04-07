@@ -36,7 +36,7 @@ config.app_generators.scaffold_controller :responders_controller
 ```
 
 
-## Adding a second model
+## 6 Adding a second model
 
 The second model will handle comments on gists.
 
@@ -128,7 +128,7 @@ Update one more _Gist_ show template.
 ```
 
 
-## Refactoring
+## 7 Refactoring
 
 Take a look at the _articles/show.html.erb_ template.
 It looks amateurish. It is long. It is unreadable.
