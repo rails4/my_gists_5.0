@@ -128,270 +128,46 @@ Update one more _Gist_ show template.
 ```
 
 
+## Refactoring
+
+Take a look at the _articles/show.html.erb_ template.
+It looks amateurish. It is long. It is unreadable.
+
+## 7.1 Rendering Partial Collections
+
+Create a comment partial _comments/_comment.html.erb_:
+```html
+<p>
+  <strong>Commenter:</strong><%= comment.commenter %>
+</p>
+<p>
+  <strong>Comment:</strong><%= comment.body %>
+</p>
+```
+
+Change _articles/show.html.erb_:
+```html
+<h2>Comments</h2>
+<%= render @gist.comments %>
+```
+
+Now the partial _comments/_comment.html.erb_ will be used once for each comment
+that is in the _@gist.comments_ collection.
 
 
 
-## From the beginning
-
-[source,bash]
-----
-rails new my_gists
-cd my_gists
-# bundle install
-# bundle install --local
-bundle install --without production
-# bundle install --without production --local
-# bundle --path vendor/bundle --without production
-# bundle --path /tmp/<unique id> --without production  # w laboratoriach (quota)
-rails server --help
-# rails server -p 3000 -b 0.0.0.0
-rails server
-----
-
-Generate Gist model/views/controlers:
-
-[source,bash]
-----
-rails generate --help
-rails generate scaffold gist src:text lang:string desc:string
-# rails db:migrate RAILS_ENV=development
-rails db:migrate
-# check available routes
-# rails routes
-# open http://localhost:3000/gists
-----
-
-You can have the root of your site routed with "root"
-
-.config/routes.rb
-[source,ruby]
-----
-root 'gists#index'
-# http://localhost:3000
-----
-
-## Deploying to production – Heroku
-
-Zobacz też https://www.railstutorial.org/book/beginning#sec-deploying[Deploying].
-
-IMPORTANT: W pliku _Gemfile_ należy przenieść
-gem _sqlite3_ do grupy _:development, :test_,
-a gem _pg_ należy wpisać do grupy _:production_.
-
-._Gemfile_
-[source,ruby]
-----
-group :development, :test do
-  gem 'byebug', platform: :mri
-  gem 'sqlite3'
-end
-
-group :production do
-  gem 'pg', '0.19.0'
-end
-----
-
-Teraz czas na instalację https://toolbelt.heroku.com[Heroku Toolbelt].
-Po instalacji wykonujemy:
-
-[source,bash]
-----
-bundle install --without production
-git commit -am "update for Heroku"
-
-# wykonujemy tylko raz
-heroku login
-heroku keys:add
-----
-
-Dodajemy nową aplikację na https://dashboard.heroku.com/apps[Dashboard] albo
-dodajemy ją na konsoli.
-
-[source,bash]
-----
-heroku create
-# Creating app... done, ⬢ still-falls-28867
-# https://still-falls-28867.herokuapp.com/ | https://git.heroku.com/still-falls-28867.git
-----
-
-Deploying,
-zob. też https://devcenter.heroku.com/articles/git[Deploying with Git].
-
-[source,bash]
-----
-git push heroku master
-# remote: ###### WARNING:
-# remote:        You have not declared a Ruby version in your Gemfile.
-# remote:        To set your Ruby version add this line to your Gemfile:
-# remote:        ruby '2.2.6'
-# remote:        # See https://devcenter.heroku.com/articles/ruby-versions for more information.
-# remote:
-# remote: ###### WARNING:
-# remote:        No Procfile detected, using the default web server.
-# remote:        We recommend explicitly declaring how to boot your server process via a Procfile.
-# remote:        https://devcenter.heroku.com/articles/ruby-default-web-server
-# remote:
-# remote: -----> Discovering process types
-# remote:        Procfile declares types     -> (none)
-# remote:        Default types for buildpack -> console, rake, web, worker
-# remote:
-# remote: -----> Compressing...
-# remote:        Done: 28M
-# remote: -----> Launching...
-# remote:        Released v5
-# remote:        https://still-falls-28867.herokuapp.com/ deployed to Heroku
-# remote:
-# remote: Verifying deploy.... done.
-# To https://git.heroku.com/still-falls-28867.git
-#  * [new branch]      master -> master
-
-heroku run rails db:migrate
-# heroku open https://still-falls-28867.herokuapp.com/
-
-heroku apps:rename gists5
-# Renaming still-falls-28867 to gists5... done
-# https://gists5.herokuapp.com/ | https://git.heroku.com/gists5.git
-# Git remote heroku updated
-#  ▸    Don't forget to update git remotes for all other local checkouts of the app.
-# heroku open https://gists5.herokuapp.com/
-----
-
-Ostrzeżenia powyżej sugerują, że warto zmienić kilka rzeczy, np.
-dodać wersję Ruby do pliku _Gemfile_:
-
-[source,ruby]
-----
-ruby '2.4.0'
-----
-
-dodać plik _Procfile_ w którym wymienimy domyślny (dla wersji Rails 4)
-serwer webowy https://devcenter.heroku.com/articles/ruby-default-web-server[Webrick]
-na szybką pumę 😓
-
-._Procfile_
-[source,ruby]
-----
-web: bundle exec puma -C config/puma.rb
-----
-
-Zobacz też
-https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server[Deploying Rails Applications with the Puma Web Server].
 
 
-## Source code prettyprinting
-
-._Gemfile_
-[source,ruby]
-----
-gem 'rouge', '~> 2.0.0'
-----
-
-W pliku _app/views/gists/index.html.erb_ wymieniamy element _table_
-na element _pre_ i kilka akapitów _p_.
-
-[source,html]
-----
-<% @gists.each do |gist| %>
-  <pre><%= gist.src %></pre>
-  <p>Lang: <%= gist.lang %></p>
-  <p>Desc: <%= gist.desc %></p>
-  <p>
-    <%= link_to 'Show', gist %> |
-    <%= link_to 'Edit', edit_gist_path(gist) %> |
-    <%= link_to 'Destroy', gist, method: :delete, data: { confirm: 'Are you sure?' } %>
-  </p>
-<% end %>
-----
-
-W pliku _app/views/gists/show.html.erb_ podmieniamy element z `@gist.src` na:
-[source,html]
-----
-<pre class="highlight"><%= raw Rouge.highlight @gist.src, @gist.lang, 'html' %></pre>
-----
-
-Tworzymy nowy plik _app/assets/stylesheets/rouge.css.erb_ o zawartości:
-[source,erb]
-----
-<%= Rouge::Themes::Github.render(scope: '.highlight')%>
-----
 
 
-## Custom layout with Bootstrap
-
- Co to jest layout? layout aplikacji? gdzie definiujemy layout?
-
-. http://getbootstrap.com[Bootstrap] –
-  the most popular HTML, CSS, and JS framework for developing responsive,
-  mobile first projects on the web
-. https://www.railstutorial.org/book/filling_in_the_layout#sec-custom_css[Bootstrap and custom CSS]
-. https://github.com/bootstrap-ruby/rails-bootstrap-forms[rails-bootstrap-forms] –
-  a Rails form builder that makes it super easy to create beautiful-looking
-  forms with Twitter Bootstrap 3+. Wraps the standard Rails form helpers
-  so it’s practically a drop-in replacement.
-
-._Gemfile_
-[source,ruby]
-----
-# Make all the necessary Bootstrap files available to the current application
-gem 'bootstrap-sass', '3.3.7'
-gem 'bootstrap-sass-extras', '0.0.7'
-
-# Optionally install
-group :development do
-  # gem 'quiet_assets' # see https://github.com/evrone/quiet_assets
-  gem 'rubocop', require: false # for Atom editor
-  gem 'scss_lint', require: false # for Atom editor
-end
-----
-
-Po tych poprawkach w pliku _Gemfile_ wykonujemy na konsoli te polecenia:
-
-[source,sh]
-----
-bundle
-rails generate
-rails generate bootstrap:install
-rails generate bootstrap:themed gists # <- liczba mnoga!
-----
 
 
-### Bootstrap krok po kroku
 
-Dodajemy pionowy odstęp u góry każdej strony _app/assets/stylesheets/custom.css.scss_:
-[source,scss]
-----
-@import 'bootstrap-sprockets';
-@import 'bootstrap';
-// body {
-//   padding-top: 60px;
-// }
-----
 
-Zmieniamy layout aplikacji _app/views/layouts/application.html.erb_:
-[source,html]
-----
-<body>
-  <%= render 'layouts/header' %>
-  <div class="container">
-    <%= yield %>
-  </div>
-</body>
-----
 
-Dodajemy widok częściowy _app/views/layouts/_header.html.erb_:
-[source,html]
-----
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="container">
-    <nav>
-      <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Home",  '/' %></li>
-        <li><%= link_to "About", '/about' %></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-----
 
-Pozostaje **przywrócić** kolorowanie fragmentów kodu (gists),
-dodać podstronę _About_, poprawić _index.html.erb_, itd.
+
+
+
+
+#
