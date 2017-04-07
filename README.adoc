@@ -34,11 +34,20 @@ Responders (_responders_ branch contains an example – adding remarks to gists)
   can be customized to use respond_with instead of default respond_to blocks.
 +
 you need to explicitly opt-in to use this generator by adding the following
-to your _config/application.rb_:
+to your _config/environments/development.rb_:
 ```ruby
 config.app_generators.scaffold_controller :responders_controller
 ```
 
 ## Responders
 
-TODO
+TODO:
+
+```sh
+rails generate responders:install
+      create  lib/application_responder.rb
+      insert  config/application.rb
+     prepend  app/controllers/application_controller.rb
+      insert  app/controllers/application_controller.rb
+      create  config/locales/responders.en.yml
+```
