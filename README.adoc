@@ -133,7 +133,7 @@ Update one more _Gist_ show template.
 Take a look at the _articles/show.html.erb_ template.
 It looks amateurish. It is long. It is unreadable.
 
-## 7.1 Rendering Partial Collections
+## 7.1 Rendering Partial Collections – implicit loop
 
 Create a comment partial _comments/_comment.html.erb_:
 ```html
@@ -154,9 +154,30 @@ Change _articles/show.html.erb_:
 Now the partial _comments/_comment.html.erb_ will be used once for each comment
 that is in the _@gist.comments_ collection.
 
+## 7.2 Rendering a Partial Form
 
+Move that new comment section out to its own partial, _comments/_form.html.erb_:
+```html
+<%= form_for([@gist, @gist.comments.build]) do |f| %>
+  <p>
+    <%= f.label :commenter %><br>
+    <%= f.text_field :commenter %>
+  </p>
+  <p>
+    <%= f.label :body %><br>
+    <%= f.text_area :body %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+```
 
-
+And update _gists/show.html.erb_:
+```html
+<h2>Add a comment</h2>
+<%= render 'comments/form' %>
+```
 
 
 
