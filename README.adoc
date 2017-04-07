@@ -27,6 +27,18 @@ cd my_gists_5.0
 git checkout --track origin/add_comments
 ```
 
+Responders (on _responders_ branch contains an _Remark_ example):
+
+* https://github.com/plataformatec/responders[gem responders]
+* also includes a responders controller generator, so your scaffold
+  can be customized to use respond_with instead of default respond_to blocks.
++
+you need to explicitly opt-in to use this generator by adding the following
+to your _config/application.rb_:
+```ruby
+config.app_generators.scaffold_controller :responders_controller
+```
+
 
 ## From the beginning
 
