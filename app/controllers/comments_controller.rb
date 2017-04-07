@@ -5,6 +5,13 @@ class CommentsController < ApplicationController
     redirect_to gist_path(@gist)
   end
 
+  def destroy
+    @gist = Gist.find(params[:gist_id])
+    @comment = @gist.comments.find(params[:id])
+    @comment.destroy
+    redirect_to gist_path(@gist)
+  end
+  
   private
 
   def comment_params

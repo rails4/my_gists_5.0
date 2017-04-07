@@ -187,8 +187,44 @@ https://www.sitepoint.com/7-design-patterns-to-refactor-mvc-components-in-rails/
 for examples how to do it.
 
 
+## 8 Deleting Comments
 
+Important feature is being able to delete spam comments.
+To do this, we need to implement a link of some sort in the view and a `destroy`
+action in the `CommentsController`.
 
+Add the delete link in the _comments/_comment.html.erb_ partial:
+```html
+<p>
+  <%= link_to 'Destroy Comment', [comment.gist, comment],
+               method: :delete,
+               data: { confirm: 'Are you sure?' },
+               class: 'btn btn-danger' %>
+</p>
+```
+
+Add a destroy action to _controllers/comments_controller.rb_:
+```ruby
+class CommentsController < ApplicationController
+
+  def destroy
+    @gist = Gist.find(params[:gist_id])
+    @comment = @gist.comments.find(params[:id])
+    @comment.destroy
+    redirect_to gist_path(@gist)
+  end
+```
+
+### 8.1 Deleting Associated Objects
+
+Assume that deleting an gist, deletes associated comments.
+
+```ruby
+class Gist < ApplicationRecord
+  has_many :comments, dependent: :destroy # changed line: added dependent
+  validates :src, presence: true, length: { minimum: 8, maximum: 1024 }
+end
+```
 
 
 
