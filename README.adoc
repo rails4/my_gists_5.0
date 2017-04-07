@@ -27,7 +27,7 @@ cd my_gists_5.0
 git checkout --track origin/add_comments
 ```
 
-Responders (on _responders_ branch contains an _Remark_ example):
+Responders (_responders_ branch contains an example – adding remarks to gists):
 
 * https://github.com/plataformatec/responders[gem responders]
 * also includes a responders controller generator, so your scaffold
