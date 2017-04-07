@@ -20,6 +20,14 @@ git checkout add_comments
 # git push -u origin add_comments # pushing local branch to GitHub
 ```
 
+Cloning repo on a new computer:
+```sh
+git pull git@github.com:rails4/my_gists_5.0.git
+cd my_gists_5.0
+git checkout --track origin/add_comments
+```
+
+
 ## From the beginning
 
 [source,bash]
