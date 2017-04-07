@@ -17,7 +17,7 @@ Kod jest na gałęzi _responders_
 +
 ```sh
 git checkout responders
-git push -u origin responders # pushing local branch to GitHub
+git push --set-upstream origin responders # pushing local branch to GitHub
 ```
 
 Cloning repo on a new computer:
