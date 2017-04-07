@@ -1,20 +1,40 @@
-# My Gists
+# My Gists (add_comments branch)
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
-. Ruby version: *2.4.1*
+. Ruby version – *2.4.1*, Rails – *5.0.2*
 . Uses https://github.com/jneen/rouge[rouge gem] –
   a pure-ruby code highlighter that is compatible with _pygments_.
 . https://www.railstutorial.org/book/beginning#sec-deploying[Deployment instructions for Heroku]
   by M. Hartl
 . http://edgeguides.rubyonrails.org/getting_started.html#adding-a-second-model[Adding a Second Model]
 +
-Kod jest na gałęzi _add_comments_
+Ten kod jest na gałęzi _add_comments_
 +
 ```sh
-git checkout add_comments
+git checkout --track origin/add_comments
 ```
+
+Tutorials:
+
+. https://www.railstutorial.org/book/beginning#sec-deploying[Deployment instructions for Heroku]
+  by M. Hartl
+. http://edgeguides.rubyonrails.org/getting_started.html#adding-a-second-model[Adding a Second Model]
+
+
+Responders (_responders_ branch contains an example – adding remarks to gists):
+
+* https://github.com/plataformatec/responders[gem responders]
+* also includes a responders controller generator, so your scaffold
+  can be customized to use respond_with instead of default respond_to blocks.
++
+you need to explicitly opt-in to use this generator by adding the following
+to your _config/application.rb_:
+```ruby
+config.app_generators.scaffold_controller :responders_controller
+```
+
 
 ## Adding a second model
 
